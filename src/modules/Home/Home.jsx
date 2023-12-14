@@ -51,7 +51,6 @@ const Home = () => {
   useEffect(() => {
     setloader(true);
     getResponse();
-
     return () => {
       setResponse([]);
       setupdateComponent(false);
@@ -73,6 +72,7 @@ const Home = () => {
 
   function ApplyButton() {}
 
+  // edit created job card data
   async function EditIconClick(data) {
     OpenModal();
     console.log(data);
@@ -100,6 +100,8 @@ const Home = () => {
 
       if (data.response) {
         seterrorModal({ id: "", title: "", modal: false, message: "" });
+        setupdateComponent(!updateComponent);
+
         // display sucess modal after job has been deleted
         setsucessModal({
           title: "Job Deleted!",

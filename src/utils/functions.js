@@ -61,7 +61,7 @@ export const put = async ({ url, param, data }) => {
   if (typeof data !== "object")
     return { message: "invalid data type. data type must be object" };
 
-  const response = await instance.post(url + "/" + param, data);
+  const response = await instance.put(`${url}/${param}`, data);
 
   return { response: response.data, status: response.status };
 };

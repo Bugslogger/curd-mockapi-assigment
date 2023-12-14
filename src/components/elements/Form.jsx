@@ -48,7 +48,6 @@ const Form = ({
     if (value) {
       formHandle.setValues(value);
     }
-    debugger;
   }, [value]);
 
   const formHandle = useFormik({
@@ -139,26 +138,32 @@ const Form = ({
     let data = "";
 
     if (isEditable) {
-      data = await put({
-        url: "/jobs",
-        param: value?.id,
-        data: { ...requestBody, id: value?.id },
-      });
+      data = await put({ url: "/jobs", param: value?.id, data: requestBody });
     } else {
       data = await post({ url: "/jobs", data: requestBody });
     }
-    debugger;
+
     if (data?.response) {
       setToggleModal(false);
       setupdateComponent(!updateComponent);
       ChangeForm();
       formHandle.resetForm();
-      setsuccessModal({
-        title: "Job Created",
-        message:
-          "Your Job has been successfully created. You're able modify or delete your job at any time.",
-        modal: true,
-      });
+
+      if (isEditable) {
+        setsuccessModal({
+          title: "Job Updated",
+          message:
+            "Your Job has been successfully updated. You're able modify or delete your job at any time.",
+          modal: true,
+        });
+      } else {
+        setsuccessModal({
+          title: "Job Created",
+          message:
+            "Your Job has been successfully created. You're able modify or delete your job at any time.",
+          modal: true,
+        });
+      }
     } else if (data?.message) {
       seterrorModal({
         message: data?.message,
